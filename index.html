@@ -5,70 +5,399 @@
   <title>Countdown to Compass Group Start</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f7f7f7;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
       margin: 0;
+      overflow: hidden;
     }
+
+    /* Animated background particles */
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+    .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+    .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+    .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+    .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+    .particle:nth-child(7) { left: 70%; animation-delay: 0.5s; }
+    .particle:nth-child(8) { left: 80%; animation-delay: 1.5s; }
+    .particle:nth-child(9) { left: 90%; animation-delay: 2.5s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+
     .container {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-      padding: 40px 30px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      padding: 60px 40px;
       text-align: center;
+      position: relative;
+      z-index: 10;
+      max-width: 500px;
+      margin: 0 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: slideIn 1s ease-out;
     }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Compass Logo */
+    .logo {
+      margin-bottom: 30px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .logo svg {
+      width: 80px;
+      height: 80px;
+      filter: drop-shadow(0 4px 8px rgba(0, 122, 255, 0.3));
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
     h1 {
-      color: #1a237e;
-      margin-bottom: 18px;
+      color: #1d1d1f;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #007AFF, #5856D6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-    .countdown {
-      font-size: 2.5em;
-      color: #1976d2;
-      margin: 18px 0;
-      font-weight: bold;
-      letter-spacing: 2px;
+
+    .company-info {
+      background: linear-gradient(135deg, #f5f5f7, #e8e8ed);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
     }
-    .label {
-      font-size: 1.2em;
-      color: #333;
-      margin-bottom: 12px;
+
+    .transition-arrow {
+      font-size: 2rem;
+      color: #007AFF;
+      margin: 10px 0;
+      animation: bounce 2s infinite;
     }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .company-name {
+      font-size: 1.1rem;
+      color: #1d1d1f;
+      font-weight: 600;
+      margin: 8px 0;
+    }
+
+    .from {
+      color: #FF3B30;
+    }
+
+    .to {
+      color: #34C759;
+    }
+
+    .start-date {
+      font-size: 1.2rem;
+      color: #1d1d1f;
+      margin-bottom: 30px;
+      font-weight: 600;
+      background: #f5f5f7;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin: 30px 0;
+    }
+
+    .countdown-item {
+      background: linear-gradient(135deg, #007AFF, #5856D6);
+      color: white;
+      padding: 20px 10px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .countdown-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .countdown-item:hover::before {
+      left: 100%;
+    }
+
+    .countdown-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 122, 255, 0.4);
+    }
+
+    .countdown-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .countdown-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      opacity: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 3px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #007AFF, #5856D6);
+      border-radius: 3px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: progressShine 2s ease-in-out infinite;
+    }
+
+    @keyframes progressShine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    #message {
+      background: linear-gradient(135deg, #34C759, #30D158);
+      color: white;
+      padding: 30px;
+      border-radius: 20px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      display: none;
+      box-shadow: 0 10px 30px rgba(52, 199, 89, 0.3);
+      animation: celebrate 1s ease-out;
+    }
+
+    @keyframes celebrate {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .celebration-emoji {
+      font-size: 3rem;
+      margin: 20px 0;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
     @media (max-width: 600px) {
-      .container { padding: 20px 10px; }
-      .countdown { font-size: 1.5em; }
+      .container { 
+        padding: 40px 20px; 
+        margin: 0 10px;
+      }
+      
+      h1 { 
+        font-size: 2rem; 
+      }
+      
+      .countdown-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      
+      .countdown-number {
+        font-size: 2rem;
+      }
+      
+      .countdown-label {
+        font-size: 0.8rem;
+      }
+      
+      .company-info {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .countdown-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      
+      .countdown-number {
+        font-size: 1.5rem;
+      }
+      
+      .countdown-item {
+        padding: 15px 5px;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
   <div class="container">
+    <div class="logo">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" fill="none" stroke="#007AFF" stroke-width="3"/>
+        <path d="M50 15 L35 35 L50 50 L65 35 Z" fill="#007AFF"/>
+        <path d="M50 50 L35 65 L50 85 L65 65 Z" fill="#5856D6"/>
+        <circle cx="50" cy="50" r="8" fill="#007AFF"/>
+        <path d="M50 20 L50 30 M50 70 L50 80 M30 50 L20 50 M70 50 L80 50" stroke="#007AFF" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+
     <h1>Countdown to Compass Group</h1>
-    <div class="label">
-      From: <strong>Selecta Deutschland GmbH</strong><br>
-      To: <strong>Compass Group</strong>
+    
+    <div class="company-info">
+      <div class="company-name from">📍 Selecta Deutschland GmbH</div>
+      <div class="transition-arrow">↓</div>
+      <div class="company-name to">🧭 Compass Group</div>
     </div>
-    <div class="label">
-      Start Date: <strong>01.11.2025</strong>
+
+    <div class="start-date">
+      🗓️ Start Date: <strong>01.11.2025</strong>
     </div>
-    <div id="countdown" class="countdown"></div>
-    <div id="message" style="color: green; font-size: 1.3em; display: none;">
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="countdown-grid" id="countdownGrid">
+      <div class="countdown-item">
+        <div class="countdown-number" id="days">0</div>
+        <div class="countdown-label">Days</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="hours">0</div>
+        <div class="countdown-label">Hours</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="minutes">0</div>
+        <div class="countdown-label">Minutes</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="seconds">0</div>
+        <div class="countdown-label">Seconds</div>
+      </div>
+    </div>
+
+    <div id="message">
+      <div class="celebration-emoji">🎉</div>
       Congratulations! Your journey at Compass Group begins today!
+      <div class="celebration-emoji">🚀</div>
     </div>
   </div>
+
   <script>
     function updateCountdown() {
-      // Target date: November 1, 2025, 00:00:00
       const targetDate = new Date('2025-11-01T00:00:00');
       const now = new Date();
       const diff = targetDate - now;
-
+      
       if (diff <= 0) {
-        document.getElementById('countdown').style.display = 'none';
+        document.getElementById('countdownGrid').style.display = 'none';
         document.getElementById('message').style.display = 'block';
+        document.querySelector('.progress-fill').style.width = '100%';
         return;
       }
 
@@ -77,12 +406,46 @@
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
 
-      document.getElementById('countdown').textContent =
-        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      // Update countdown numbers with animation
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+
+      // Calculate progress (assuming start date was some time ago)
+      const startCalculation = new Date('2025-01-01T00:00:00'); // Adjust as needed
+      const totalTime = targetDate - startCalculation;
+      const elapsed = now - startCalculation;
+      const progress = Math.max(0, Math.min(100, (elapsed / totalTime) * 100));
+      
+      document.getElementById('progressFill').style.width = progress + '%';
+
+      // Add pulse animation to seconds
+      const secondsEl = document.getElementById('seconds');
+      secondsEl.style.transform = 'scale(1.1)';
+      setTimeout(() => {
+        secondsEl.style.transform = 'scale(1)';
+      }, 200);
     }
 
+    // Initialize
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    // Add smooth transition for countdown items
+    document.querySelectorAll('.countdown-item').forEach(item => {
+      item.style.transition = 'all 0.3s ease';
+    });
+
+    // Add click effects
+    document.querySelectorAll('.countdown-item').forEach(item => {
+      item.addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = 'translateY(-5px)';
+        }, 150);
+      });
+    });
   </script>
 </body>
 </html>
